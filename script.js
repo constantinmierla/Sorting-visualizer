@@ -61,15 +61,18 @@ function animate(){
         changed = socks[i].draw(ctx) || changed;
         Physics.update(socks[i].particles, socks[i].segments);
     }
-    bird.draw(ctx);
+    changed = bird.draw(ctx) || changed;
     
     if(!changed && moves.length > 0){
         const nextMove = moves.shift();
+        const [i,j] = nextMove.indices;
         if(nextMove.type === "swap"){
             const[i,j] = nextMove.indices;
             socks[i].moveTo(socks[j].loc);
             socks[j].moveTo(socks[i].loc);
             [socks[i],socks[j]] = [socks[j],socks[i]];
+        }else{
+            bird.moveTo(socks[i].loc, socks[j].loc);
         }
     }
     requestAnimationFrame(animate);
