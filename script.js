@@ -4,7 +4,7 @@ myCanvas.height = 300;
 const n = 20;
 const array = [];
 
-const stringHeight = myCanvas.height*0.45;
+const stringHeight = myCanvas.height*0.40;
 
 const socks = [];
 const margin = 30;
@@ -37,6 +37,9 @@ for (let i = 0; i < array.length; i++){
     socks[i] = new Sock(x,y,height,sockColors[i]);
 }
 
+const bird = new Bird(socks[0].loc, socks[1].loc, myCanvas.height*0.2);
+
+//aici de adaugat butoanele
 const moves = bubbleSort(array);
 
 const ctx=myCanvas.getContext("2d");
@@ -45,6 +48,8 @@ animate();
 
 function animate(){
     ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+
+    ctx.strokeStyle = "black";
     ctx.beginPath();
     ctx.moveTo(0,stringHeight);
     ctx.lineTo(myCanvas.width,stringHeight);
@@ -56,7 +61,7 @@ function animate(){
         changed = socks[i].draw(ctx) || changed;
         Physics.update(socks[i].particles, socks[i].segments);
     }
-
+    bird.draw(ctx);
     
     if(!changed && moves.length > 0){
         const nextMove = moves.shift();
