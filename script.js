@@ -11,7 +11,7 @@ const margin = 30;
 const availableWidth = myCanvas.width - 2*margin;
 const spacing = availableWidth/ n;
 
-const colors = ['red','green','blue','yellow','purple','orange','pink','black','white','gray','brown','cyan','magenta','lime','indigo','teal','violet',
+const colors = ['red','green','blue','purple','orange','pink','black','gray','brown','cyan','magenta','lime','indigo','teal','violet',
                 'navy','maroon','olive','aqua','fuchsia', 'silver','lime','crimson','coral','gold','plum','ivory','azure','lavender','salmon','tan',
                 'khaki','wheat','beige','mint','apricot','cerulean','rose'];
 

@@ -31,9 +31,10 @@ class Sock{
         lastP.loc.x -= this.blockHeight*2;
         lastP.loc.y += this.blockHeight*0.1;
         const secondLastP = this.particles[this.particles.length-2];
-        secondLastP.loc.x -= this.blockHeight*3;
+        secondLastP.loc.x -= this.blockHeight*2;
         secondLastP.loc.y -= this.blockHeight*0.5;
-
+        const secondSecondLastP = this.particles[this.particles.length-3];
+        secondSecondLastP.loc.y += this.blockHeight;
         this.segments.push(
             new Segment(this.particles[0],this.particles[1])
         );
