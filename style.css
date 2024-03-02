@@ -1,6 +1,39 @@
 h1 {
     color: #6495ED;
+    font-size: 40px;
   }
+
+  .bottom-content {
+    text-align: center;
+    padding: 20px;
+    background-color: #6495ED;
+    color: white;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    transition: background-color 0.5s;
+}
+
+.bottom-content:hover {
+    background-color: #555; /* Schimbarea culorii la hover */
+}
+
+.bottom-content p {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 16px;
+}
+
+.bottom-content a {
+    color: #87CEFA; /* Culoare link */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.bottom-content a:hover {
+    color: #87CEFA;
+}
+
 body{
     display: flex;
     flex-direction: column;

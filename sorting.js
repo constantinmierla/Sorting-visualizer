@@ -22,6 +22,7 @@ class Sorting{
         }while(swapped);
         return moves;
     }
+
     static SelectionSort(array)
     {
         const moves = [];
@@ -46,6 +47,7 @@ class Sorting{
         }
         return moves;
     }
+    
     static InsertionSort(array)
     {
         const moves = [];

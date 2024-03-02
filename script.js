@@ -34,6 +34,7 @@ for (let i = 0; i < array.length; i++){
     [array[i], array[j]] = [array[j], array[i]];
     [sockColors[i], sockColors[j]] = [sockColors[j], sockColors[i]];
 }
+
 for (let i = 0; i < array.length; i++){
     const u=Math.sin(i/(array.length-1)*Math.PI);
     const x=i*spacing+spacing/2+margin;
@@ -44,7 +45,6 @@ for (let i = 0; i < array.length; i++){
 
 const bird = new Bird(socks[0].loc, socks[1].loc, myCanvas.height*0.2);
 
-//aici de adaugat butoanele
 let moves = 0;
 
 const ctx=myCanvas.getContext("2d");
@@ -66,6 +66,7 @@ ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
     changed = bird.draw(ctx) || changed;  
 
 function animate(){
+
     ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
 
     ctx.strokeStyle="black";
@@ -101,22 +102,37 @@ function animate(){
     requestAnimationFrame(animate);
 }
 
-document.getElementById("bubbleSortBtn").addEventListener("click", function () {
-    moves = Sorting.bubbleSort(array);
-    moves.shift();
-    animate();
+let bubbleSortClicked = false;
+let selectionSortClicked = false;
+let insertionSortClicked = false;
 
+document.getElementById("bubbleSortBtn").addEventListener("click", function () {
+    if (!bubbleSortClicked && !selectionSortClicked && !insertionSortClicked) {
+        moves = Sorting.bubbleSort(array);
+        moves.shift();
+        animate();
+        bubbleSortClicked = true;
+    }
 });
+
 document.getElementById("selectionSortBtn").addEventListener("click", function () {
-    moves = Sorting.SelectionSort(array);
-    moves.shift();
-    animate();
+    if (!bubbleSortClicked && !selectionSortClicked && !insertionSortClicked) {
+        moves = Sorting.SelectionSort(array);
+        moves.shift();
+        animate();
+        selectionSortClicked = true;
+    }
 });
+
 document.getElementById("insertionSortBtn").addEventListener("click", function () {
-    moves = Sorting.InsertionSort(array);
-    moves.shift();
-    animate();
+    if (!bubbleSortClicked && !selectionSortClicked && !insertionSortClicked) {
+        moves = Sorting.InsertionSort(array);
+        moves.shift();
+        animate();
+        insertionSortClicked = true;
+    }
 });
+
 document.getElementById("resetBtn").addEventListener("click", function () {
     location.reload();
 });

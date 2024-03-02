@@ -1,4 +1,5 @@
 class Particle{
+
     constructor(loc, fixed = false){
         this.loc = loc;
         this.oldLoc = loc;
@@ -13,6 +14,7 @@ class Particle{
         this.oldLoc = this.loc;
         this.loc = withGravity;
     }
+    
     draw(ctx, radius = 5){
         ctx.beginPath();
         ctx.fillStyle = "green";

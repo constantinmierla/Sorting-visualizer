@@ -60,6 +60,7 @@ function distance(A,B){
     const sub=substract (A,B);
     return magnitute(sub);
 }
+
 function easeInOutBack(x){
     const f=Math.sin(x*Math.PI);
     const t=4.5;

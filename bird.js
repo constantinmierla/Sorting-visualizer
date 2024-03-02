@@ -123,7 +123,7 @@ class Bird{
 
     #drawHead(ctx){
         // head
-        ctx.fillStyle="blue";
+        ctx.fillStyle="#6495ED";
         ctx.strokeStyle="darkblue";
         const radius=15;
         
@@ -153,7 +153,7 @@ class Bird{
         ctx.fill();
         ctx.stroke();
 
-        ctx.fillStyle="blue";
+        ctx.fillStyle="#6495ED";
         ctx.save();
         ctx.translate(this.head.x,this.head.y-radius*1.3);
         this.#drawFeathers(ctx,{
@@ -261,12 +261,12 @@ class Bird{
         
         ctx.stroke();
         
-        ctx.strokeStyle="yellow";
+        ctx.strokeStyle="orange";
         ctx.lineWidth=4;
         ctx.stroke();
 
         ctx.setLineDash([2,8]);
-        ctx.strokeStyle="orange"; 
+        ctx.strokeStyle="#F5FFFA"; 
         ctx.stroke();
         ctx.setLineDash([]);
     }

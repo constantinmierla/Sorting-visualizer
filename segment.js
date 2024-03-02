@@ -1,4 +1,5 @@
 class Segment{
+    
     //pA and pB are particles
     constructor(pA,pB){
         this.pA = pA;

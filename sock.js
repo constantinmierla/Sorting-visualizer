@@ -1,4 +1,5 @@
 class Sock{
+    
     constructor(x,y,height,color){
         this.width=8;
         this.loc={x,y};

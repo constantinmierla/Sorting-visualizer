@@ -1,4 +1,5 @@
 class Physics{
+    
     static G = 1;
 
     static update(particles,segments){
