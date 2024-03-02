@@ -1,7 +1,7 @@
 import Sorting from './sorting.js';
 
 const myCanvas = document.getElementById('myCanvas');
-myCanvas.width = 600;
+myCanvas.width = 500;
 myCanvas.height = 300;
 const n = 20;
 const array = [];
@@ -19,6 +19,8 @@ const colors = ['red','green','blue','purple','orange','pink','black','gray','br
 
 const sockColors = [];
 
+const tweenLength=30;
+
 for (let i = 0; i<n/2; i++) {
     const t = i/(n/2-1);
     sockColors.push(colors[i]);
@@ -33,10 +35,11 @@ for (let i = 0; i < array.length; i++){
     [sockColors[i], sockColors[j]] = [sockColors[j], sockColors[i]];
 }
 for (let i = 0; i < array.length; i++){
-    const x = i*spacing+spacing/2 + margin;
-    const y = stringHeight;
-    const height = 0.4*myCanvas.height*array[i];
-    socks[i] = new Sock(x,y,height,sockColors[i]);
+    const u=Math.sin(i/(array.length-1)*Math.PI);
+    const x=i*spacing+spacing/2+margin;
+    const y=stringHeight+u*margin*0.7;
+    const height=myCanvas.height*0.4*array[i];
+    socks[i]=new Sock(x,y,height,sockColors[i]);
 }
 
 const bird = new Bird(socks[0].loc, socks[1].loc, myCanvas.height*0.2);
@@ -45,6 +48,7 @@ const bird = new Bird(socks[0].loc, socks[1].loc, myCanvas.height*0.2);
 let moves = 0;
 
 const ctx=myCanvas.getContext("2d");
+const startTime=new Date().getTime();
 
 ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
 
@@ -62,48 +66,55 @@ ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
     changed = bird.draw(ctx) || changed;  
 
 function animate(){
-        ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+    ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
 
-        ctx.strokeStyle = "black";
-        ctx.beginPath();
-        ctx.moveTo(0,stringHeight);
-        ctx.lineTo(myCanvas.width,stringHeight);
-        ctx.stroke();
-        
-        let changed = false;
+    ctx.strokeStyle="black";
+    ctx.beginPath();
+    ctx.moveTo(0,stringHeight-margin*0.5);
+    ctx.bezierCurveTo(
+        myCanvas.width/4,stringHeight+margin,
+        3*myCanvas.width/4,stringHeight+margin,
+        myCanvas.width,stringHeight-margin*0.5
+    );
+    ctx.stroke();
+    
+    let changed = false;
 
-        for (let i = 0; i < socks.length; i++){
-            changed = socks[i].draw(ctx) || changed;
-            Physics.update(socks[i].particles, socks[i].segments);
-        }
-        changed = bird.draw(ctx) || changed;
-        
-        if(!changed && moves.length > 0){
-            const nextMove = moves.shift();
-            const [i,j] = nextMove.indices;
-            if(nextMove.type === "swap"){
-                const[i,j] = nextMove.indices;
-                socks[i].moveTo(socks[j].loc);
-                socks[j].moveTo(socks[i].loc);
-                [socks[i],socks[j]] = [socks[j],socks[i]];
-            }else{
-                bird.moveTo(socks[i].loc, socks[j].loc);
-            }
-        }
-        requestAnimationFrame(animate);
+    for (let i = 0; i < socks.length; i++){
+        changed = socks[i].draw(ctx) || changed;
+        Physics.update(socks[i].particles, socks[i].segments);
     }
+    changed = bird.draw(ctx) || changed;
+    
+    if(new Date().getTime()-startTime>1000 && !changed && moves.length>0){
+        const nextMove=moves.shift();
+        const [i,j]=nextMove.indices;
+        if(nextMove.type=="swap"){
+            socks[i].moveTo(socks[j].loc,tweenLength);
+            socks[j].moveTo(socks[i].loc,tweenLength);
+            bird.moveTo(socks[j].loc,socks[i].loc,false,tweenLength);
+            [socks[i],socks[j]]=[socks[j],socks[i]];
+        }else{
+            bird.moveTo(socks[i].loc,socks[j].loc,true,tweenLength);
+        }
+    }
+    requestAnimationFrame(animate);
+}
 
 document.getElementById("bubbleSortBtn").addEventListener("click", function () {
     moves = Sorting.bubbleSort(array);
+    moves.shift();
     animate();
 
 });
 document.getElementById("selectionSortBtn").addEventListener("click", function () {
     moves = Sorting.SelectionSort(array);
+    moves.shift();
     animate();
 });
 document.getElementById("insertionSortBtn").addEventListener("click", function () {
     moves = Sorting.InsertionSort(array);
+    moves.shift();
     animate();
 });
 document.getElementById("resetBtn").addEventListener("click", function () {
