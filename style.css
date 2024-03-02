@@ -1,5 +1,9 @@
+h1 {
+    color: #6495ED; /* Schimbă culoarea textului */
+  }
 body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #FFFAFA;
 }

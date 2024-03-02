@@ -66,18 +66,7 @@ class Sorting{
         }
         return moves;
     }
-    static QuickSort(array){
-        const moves = [];
-        function quickSort(array, left, right){
-            if(left < right){
-                const pivot = Sorting.partition(array, left, right, moves);
-                quickSort(array, left, pivot-1);
-                quickSort(array, pivot+1, right);
-            }
-        }
-        quickSort(array, 0, array.length-1);
-        return moves;
-    }
+
 }
 
 export default Sorting;

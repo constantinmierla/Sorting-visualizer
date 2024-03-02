@@ -95,7 +95,6 @@ function animate(){
 
 document.getElementById("bubbleSortBtn").addEventListener("click", function () {
     moves = Sorting.bubbleSort(array);
-
     animate();
 
 });
@@ -108,15 +107,5 @@ document.getElementById("insertionSortBtn").addEventListener("click", function (
     animate();
 });
 document.getElementById("resetBtn").addEventListener("click", function () {
-    moves = [];
-    for (let i = 0; i < socks.length; i++){
-        socks[i].moveTo({x: i*spacing+spacing/2 + margin, y: stringHeight});
-    }
-    bird.moveTo(socks[0].loc, socks[1].loc);
-    animate();
+    location.reload();
 });
-document.getElementById("quickSortBtn").addEventListener("click", function () {
-    moves = Sorting.QuickSort(array);
-    animate();
-});
-
