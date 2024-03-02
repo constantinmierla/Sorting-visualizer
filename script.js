@@ -1,3 +1,5 @@
+import Sorting from './sorting.js';
+
 const myCanvas = document.getElementById('myCanvas');
 myCanvas.width = 600;
 myCanvas.height = 300;
@@ -40,62 +42,81 @@ for (let i = 0; i < array.length; i++){
 const bird = new Bird(socks[0].loc, socks[1].loc, myCanvas.height*0.2);
 
 //aici de adaugat butoanele
-const moves = bubbleSort(array);
+let moves = 0;
 
 const ctx=myCanvas.getContext("2d");
 
-animate();
-
-function animate(){
-    ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
 
     ctx.strokeStyle = "black";
     ctx.beginPath();
     ctx.moveTo(0,stringHeight);
     ctx.lineTo(myCanvas.width,stringHeight);
     ctx.stroke();
-    
     let changed = false;
 
     for (let i = 0; i < socks.length; i++){
         changed = socks[i].draw(ctx) || changed;
         Physics.update(socks[i].particles, socks[i].segments);
     }
-    changed = bird.draw(ctx) || changed;
-    
-    if(!changed && moves.length > 0){
-        const nextMove = moves.shift();
-        const [i,j] = nextMove.indices;
-        if(nextMove.type === "swap"){
-            const[i,j] = nextMove.indices;
-            socks[i].moveTo(socks[j].loc);
-            socks[j].moveTo(socks[i].loc);
-            [socks[i],socks[j]] = [socks[j],socks[i]];
-        }else{
-            bird.moveTo(socks[i].loc, socks[j].loc);
+    changed = bird.draw(ctx) || changed;  
+
+function animate(){
+        ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+
+        ctx.strokeStyle = "black";
+        ctx.beginPath();
+        ctx.moveTo(0,stringHeight);
+        ctx.lineTo(myCanvas.width,stringHeight);
+        ctx.stroke();
+        
+        let changed = false;
+
+        for (let i = 0; i < socks.length; i++){
+            changed = socks[i].draw(ctx) || changed;
+            Physics.update(socks[i].particles, socks[i].segments);
         }
-    }
-    requestAnimationFrame(animate);
-}
-function bubbleSort(array){
-    const moves = [];
-    do{
-        var swapped = false;
-        for(let i = 1; i < array.length; i++){
-            moves.push({
-                indices: [i-1, i],
-                type:"comparison"
-            });
-            if(array[i-1] > array[i]){
-                swapped = true;
-                [array[i-1], array[i]] = [array[i], array[i-1]];
-                moves.push({
-                    indices: [i-1, i],
-                    type:"swap"
-                });
+        changed = bird.draw(ctx) || changed;
+        
+        if(!changed && moves.length > 0){
+            const nextMove = moves.shift();
+            const [i,j] = nextMove.indices;
+            if(nextMove.type === "swap"){
+                const[i,j] = nextMove.indices;
+                socks[i].moveTo(socks[j].loc);
+                socks[j].moveTo(socks[i].loc);
+                [socks[i],socks[j]] = [socks[j],socks[i]];
+            }else{
+                bird.moveTo(socks[i].loc, socks[j].loc);
             }
         }
+        requestAnimationFrame(animate);
+    }
 
-    }while(swapped);
-    return moves;
-}
+document.getElementById("bubbleSortBtn").addEventListener("click", function () {
+    moves = Sorting.bubbleSort(array);
+
+    animate();
+
+});
+document.getElementById("selectionSortBtn").addEventListener("click", function () {
+    moves = Sorting.SelectionSort(array);
+    animate();
+});
+document.getElementById("insertionSortBtn").addEventListener("click", function () {
+    moves = Sorting.InsertionSort(array);
+    animate();
+});
+document.getElementById("resetBtn").addEventListener("click", function () {
+    moves = [];
+    for (let i = 0; i < socks.length; i++){
+        socks[i].moveTo({x: i*spacing+spacing/2 + margin, y: stringHeight});
+    }
+    bird.moveTo(socks[0].loc, socks[1].loc);
+    animate();
+});
+document.getElementById("quickSortBtn").addEventListener("click", function () {
+    moves = Sorting.QuickSort(array);
+    animate();
+});
+
