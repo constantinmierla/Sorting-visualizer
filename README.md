@@ -1,3 +1,5 @@
+# Advanced sorting visualizer featuring different sorting algorithms using JavaScript, HTML, CSS
+
 • Developed a dynamic sorting visualizer application showcasing three distinct sorting algorithms, enhancing user
 understanding of sorting methodologies through visual representations.
 
